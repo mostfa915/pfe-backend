@@ -41,7 +41,7 @@ private ProduitReposetory produitReposetory;
 
 
     @GetMapping("/onebycode/{code}")
-    Commande getOnebycode(@PathVariable String code) {
+    Commande getOnebycode(@PathVariable Long code) {
         return commandeReposetory.findbycode(code);
     }
  /*   @PostMapping("/save")
@@ -63,7 +63,7 @@ private ProduitReposetory produitReposetory;
 
     @PostMapping("/save")
     public Commande Ajouter(@RequestBody Commande commande) {
-        System.out.println(commande.getAdresse());
+        System.out.println(commande.getNom());
 
         Clients clients=new Clients();
                 clients=clientReposetory.findbyname(commande.getNom());
@@ -75,15 +75,16 @@ private ProduitReposetory produitReposetory;
 
       Commande c=  commandeReposetory.save(commande);
 
-
+clients.getClientCommandes().add(commande);
     Collection<Pannier> lpannier = commande.getLpanniers();
 
         for (Pannier lc : lpannier) {
 
-
+lc.setDatepannier(commande.getDatecommande());
 
             lc.setIdCommande(commande);
 lc.setIdproduit(produitReposetory.findbyId(lc.getId()));
+
             pannierReposetory.save(lc);
 
         }
@@ -111,6 +112,7 @@ lc.setIdproduit(produitReposetory.findbyId(lc.getId()));
         return hashmap;
 
     }
+
     @GetMapping("/count")
     Long counts(){
         return commandeReposetory.countallCommande();
@@ -123,6 +125,9 @@ lc.setIdproduit(produitReposetory.findbyId(lc.getId()));
     List<Commande> cmdmm(@PathVariable String date){
         return commandeReposetory.commandederniermm(date);
     }
-
+    @GetMapping("/commandeclient/{id}")
+    List<Commande> cmdmm(@PathVariable Long id){
+        return commandeReposetory.commandeclient(id);
+    }
 
 }

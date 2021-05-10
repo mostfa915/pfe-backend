@@ -13,8 +13,8 @@ public interface CommandeReposetory extends JpaRepository<Commande,Long> {
     Commande findbyId( @Param("x") Long id);
 
 
-    @Query("select p from Commande p where p.code_commande like :x")
-    Commande findbycode( @ Param("x") String code_commande);
+    @Query("select p from Commande p where p.id like :x")
+    Commande findbycode( @ Param("x") Long id);
     @Query("select count(e) from Commande e")
     Long countallCommande();
     @Query("select  p from Commande p order by p.id desc")
@@ -22,6 +22,11 @@ public interface CommandeReposetory extends JpaRepository<Commande,Long> {
     @Query("select  p from Commande p where p.datecommande like  "+'%'+":x"+'%')
 
     List<Commande> commandederniermm(@Param("x") String date);
+    @Query("select  p from Commande p where p.datecommande like  "+'%'+":x"+'%')
 
+    List<Commande> commandederniermm2(@Param("x") String date);
+    @Query("select  p from Commande p where p.IdClient.id like :x ")
+    List<Commande>commandeclient( @ Param("x") Long id);
 }
+
 

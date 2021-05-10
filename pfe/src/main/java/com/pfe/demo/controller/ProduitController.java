@@ -124,9 +124,20 @@ public class ProduitController {
     Produit findbyId(@PathVariable Long id){
         return produitReposetory.getOne(id);
     }
+    @GetMapping("/countproduitbyartisan/{id}")
+    Long countproduitbyartisan(@PathVariable Long id)
+    {
+        return produitReposetory.countprouitartisan(id);
+    }
+
     @GetMapping("/getbyarti/{id}")
    List<Produit> findbyIdart(@PathVariable Long id){
         return produitReposetory.findProductbyartisa(id);
+    }
+
+    @GetMapping("/getbyartisandesc/{id}")
+    List<Produit> findbyIdartisandesc(@PathVariable Long id){
+        return produitReposetory.findProductbyartisandec(id);
     }
     @GetMapping("/findbymc")
     List<Produit> ChercherParMc(String mc){

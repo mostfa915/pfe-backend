@@ -23,7 +23,6 @@ private String codepostale;
     private String password;
     private String tel;
     private String dateinscription;
-
     @OneToOne
     @JoinColumn(name = "emplacementid")
     private Emplacement emplacementid;

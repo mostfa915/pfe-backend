@@ -14,6 +14,8 @@ public class Clients  extends Utilisateur {
     private Collection<Commande> ClientCommandes;
 
 
+
+    @JsonIgnore
     public Collection<Commande> getClientCommandes() {
         return ClientCommandes;
     }

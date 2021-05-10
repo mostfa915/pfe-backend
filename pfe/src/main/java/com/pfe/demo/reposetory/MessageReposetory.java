@@ -12,4 +12,10 @@ public interface MessageReposetory extends JpaRepository<Message,Long> {
     @Query("select  p from Message p where p.idDestinataire.id like :x   order by p.id desc   ")
 
     List<Message> messagebyartisan(@Param("x") Long id);
+    @Query("select  p from Message p where p.idDestinataire.id like :x   order by p.id desc   ")
+
+    List<Message> messagebclient(@Param("x") Long id);
+    @Query("select  p from Message p   where p.id like :x ")
+    Message messagebyid(@Param("x") Long id);
 }
+

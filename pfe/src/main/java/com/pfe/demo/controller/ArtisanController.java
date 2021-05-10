@@ -96,7 +96,7 @@ System.out.println(longitude);
         Emplacement emp=new Emplacement();
         emp.setAltetude(latitude);
         emp.setLongetude(longitude);
-        emp.setNomville(artisan2.getVille());
+        emp.setNomville(a.getVille());
         emplacementReposetory.save(emp);
 
 
@@ -104,6 +104,7 @@ System.out.println(longitude);
         artisan2.setPassword(a.getPassword());
         artisan2.setPrenom(a.getPrenom());
         artisan2.setEmail(a.getEmail());
+        artisan2.setVille(a.getVille());
 artisan2.setDateinscription(a.getDateinscription());
         Roles role =rolesReposetory.findByRoleNom("ARTISAN");
         artisan2.getRoles().add(role);

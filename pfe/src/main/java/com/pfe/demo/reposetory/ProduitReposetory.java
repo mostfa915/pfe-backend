@@ -13,6 +13,9 @@ public interface ProduitReposetory extends JpaRepository<Produit,Long> {
 
     @Query("select p from Produit p where p.id like :x")
     Produit findbyId( @ Param("x") Long id);
+    @Query("select p from Produit p where p.idArtisan.id like :x order by p.id desc")
+    List<Produit> findProductbyartisandec( @ Param("x") Long id);
+
 
     @Query("select p from Produit p where p.idArtisan.id like :x ")
    List<Produit> findProductbyartisa( @ Param("x") Long id);
@@ -20,5 +23,7 @@ public interface ProduitReposetory extends JpaRepository<Produit,Long> {
     Long countallproduits();
     @Query("select  p from Produit p order by p.id desc")
     List<Produit>alldesc();
+    @Query("select count(p) from Produit p where p.idArtisan.id like :x ")
+   Long countprouitartisan( @ Param("x") Long id);
 }
 

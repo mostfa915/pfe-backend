@@ -13,6 +13,15 @@ public class Pannier implements Serializable {
     private Long id1;
 private String nom ;
     public double prix;
+    public String etat="En attente";
+
+    public String getEtat() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
 
     public Long getId1() {
         return id1;
@@ -38,7 +47,26 @@ private Fournisseur idFournisseur;
     private Produit Idproduit;
     @ManyToOne
     private Commande IdCommande;
-@JsonIgnore
+    String datepannier;
+    private Long qte;
+
+    public Long getQte() {
+        return qte;
+    }
+
+    public void setQte(Long qte) {
+        this.qte = qte;
+    }
+
+    public String getDatepannier() {
+        return datepannier;
+    }
+
+    public void setDatepannier(String datepannier) {
+        this.datepannier = datepannier;
+    }
+
+
     public Commande getIdCommande() {
 
         return IdCommande;

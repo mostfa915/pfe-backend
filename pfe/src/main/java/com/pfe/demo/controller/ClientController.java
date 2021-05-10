@@ -1,19 +1,23 @@
 package com.pfe.demo.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfe.demo.Services.CompteServices;
-import com.pfe.demo.entiter.Clients;
-import com.pfe.demo.entiter.Fournisseur;
-import com.pfe.demo.entiter.Roles;
-import com.pfe.demo.entiter.Utilisateur;
+import com.pfe.demo.entiter.*;
 import com.pfe.demo.reposetory.ClientReposetory;
+import com.pfe.demo.reposetory.EmplacementReposetory;
 import com.pfe.demo.reposetory.RolesReposetory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -25,30 +29,76 @@ public class ClientController {
     private CompteServices compteServices;
     @Autowired
     private RolesReposetory rolesReposetory;
+    @Autowired
+    private EmplacementReposetory emplacementReposetory;
     private final Path rootLocation = Paths.get("images");
 
-
-    @PostMapping("/addclient")
-    public Clients regitrer(@RequestBody Clients client) {
-
-        Clients client1 = (Clients) compteServices.FindUserByUsername(client.getUsername());
-        if (client1 != null) throw new RuntimeException("username exist");
-
-
-        Clients client2 = new Clients();
-        client2.setUsername(client.getUsername());
-        client2.setPassword(client.getPassword());
-        client2.setPrenom(client.getPrenom());
-        client2.setEmail(client.getEmail());
-        client2.setCodepostale(client.getCodepostale());
-        client2.setVille(client.getVille());
-        client2.setAdresse(client.getAdresse());
-        client2.setPhotodeprofil("user.png");
-        Roles role = rolesReposetory.findByRoleNom("CLIENT");
-        client2.getRoles().add(role);
-
-        return (Clients) compteServices.saveUser(client2);
+    @GetMapping("/all")
+    List<Clients> getAll() {
+        return clientReposetory.findAll();
     }
+
+
+        @PostMapping("/addclient")
+        public Clients ajouter(/*@RequestParam("file")MultipartFile file,*/ @RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("artisan1") String client) throws IOException, JsonParseException, JsonMappingException
+        {
+            Clients a = new ObjectMapper().readValue(client, Clients.class);
+            System.out.println(a.getDateinscription());
+            System.out.println(rootLocation.toString());
+            boolean isExist = new File(rootLocation.toString()).exists();
+            System.out.println(longitude);
+            if (!isExist) {
+                Files.createDirectory(rootLocation);
+                System.out.println("mk Dir");
+            }
+
+/*            String filename = file.getOriginalFilename();
+            String newfilename = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+
+        Files.copy(file.getInputStream(), this.rootLocation.resolve(newfilename));*/
+System.out.println(a.getUsername());
+            Utilisateur artisan1= (Utilisateur) compteServices.FindUserByUsername(a.getUsername());
+            if(artisan1!=null)throw new RuntimeException("username exist");
+
+
+            Clients artisan2=new Clients();
+            Emplacement emp=new Emplacement();
+            emp.setAltetude(latitude);
+            emp.setLongetude(longitude);
+            emp.setNomville(a.getVille());
+            emplacementReposetory.save(emp);
+
+
+            artisan2.setUsername(a.getUsername());
+            artisan2.setPassword(a.getPassword());
+            artisan2.setPrenom(a.getPrenom());
+            artisan2.setEmail(a.getEmail());
+            artisan2.setVille(a.getVille());
+            artisan2.setDateinscription(a.getDateinscription());
+           artisan2.setTel(a.getTel());
+            Roles role =rolesReposetory.findByRoleNom("Client");
+            artisan2.getRoles().add(role);
+
+
+            artisan2.setPhotodeprofil("user.png");
+            /*System.out.println(newfilename);*/
+
+            artisan2.setEmplacementid(emp);
+
+            //  if(a != null) {
+            return(Clients) compteServices.saveUser(artisan2);
+
+            //    }
+            //  else{
+            //    return new ResponseEntity<Response>(new Response(" not saved"), HttpStatus.BAD_REQUEST);
+
+        }
+    @GetMapping("/getone/{id}")
+   Clients findbyId(@PathVariable Long id){
+        return clientReposetory.getOne(id);
+    }
+
+
 
     @DeleteMapping("/deleteall")
     public HashMap<String, String> delete() {

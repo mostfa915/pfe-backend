@@ -3,12 +3,18 @@ package com.pfe.demo.entiter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
+
 @Entity
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
 private  String Message;
+private String date;
+private int vu;
+
+
     @ManyToOne
     @JoinColumn(name ="idDiscussion")
     private Discussion idDiscussion;
@@ -17,6 +23,22 @@ private  String Message;
     private Utilisateur idUtilisateur;
     @ManyToOne
     private Utilisateur idDestinataire;
+
+    public int getVu() {
+        return vu;
+    }
+
+    public void setVu(int vu) {
+        this.vu = vu;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Utilisateur getIdDestinataire() {
         return idDestinataire;

@@ -23,6 +23,14 @@ private String ville;
 private String codepostale ;
 private String tel ;
 private String code_commande;
+    private String adressedelivraison ;
+    public String getAdressedelivraison() {
+        return adressedelivraison;
+    }
+
+    public void setAdressedelivraison(String adressedelivraison) {
+        this.adressedelivraison = adressedelivraison;
+    }
 
 
     public String getCode_commande() {
@@ -78,7 +86,6 @@ private String code_commande;
     public void setMontant(double montant) {
         this.montant = montant;
     }
-@JsonIgnore
     public Clients getIdClient() {
         return IdClient;
     }
@@ -107,7 +114,7 @@ private Clients IdClient;
    private   Collection<Pannier>lpanniers;
 
 
-
+@JsonIgnore
     public Collection<Pannier> getLpanniers() {
         return lpanniers;
     }

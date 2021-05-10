@@ -43,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // http.formLogin();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/sendMail/**","/admin/**","/Discussion/**","/Message/**","/commentaire/**","/emplacement/**","/client/**","/commande/**","/evennement/**","/addroles/", "/artisan/**", "/utilisateur/**", "/register/**", "/tasks/savetask/**", "/addroles/**", "/fournisseur/**", "/client/**", "/produit/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/produit/**").hasAnyAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/pannier/**","/notificationDetails/**","/icccapp/**","/connectToSocket/**","/sendMail/**","/admin/**","/Discussion/**","/Message/**","/commentaire/**","/emplacement/**","/client/**","/commande/**","/evennement/**","/addroles/", "/artisan/**", "/utilisateur/**", "/register/**", "/tasks/savetask/**", "/addroles/**", "/fournisseur/**", "/client/**", "/produit/**").permitAll();
+     /*   http.authorizeRequests().antMatchers(HttpMethod.GET, "/produit/**").hasAnyAuthority("ADMIN");*/
         http.authorizeRequests().anyRequest().authenticated();
         http.csrf().disable();
         //http.addFilter(new JwtAuthetificationFilter(authenticationManager()));
@@ -56,6 +56,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 HttpMethod.POST,
                 "/utilisateur/login"
+        );
+        web.ignoring().antMatchers(
+
+                "/notificationDetails/**",
+                "/notificationDetails/",
+                "/assetData/",
+                "/connectToSocket"
         );
 }
 
