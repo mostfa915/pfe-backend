@@ -3,6 +3,7 @@ package com.pfe.demo.controller;
 import com.pfe.demo.entiter.Categories;
 import com.pfe.demo.entiter.Clients;
 import com.pfe.demo.entiter.Pannier;
+import com.pfe.demo.entiter.Utilisateur;
 import com.pfe.demo.reposetory.PannierReposetory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -66,13 +67,13 @@ public class PannierController {
         return pannierReposetory.getOne(id);
     }
 
-    @GetMapping("/countclientbyartisan/{id}")
+    @GetMapping("/countpannierbyartisan/{id}")
     Long artisanclients(@PathVariable Long id) {
         return pannierReposetory.countclientpourartisan(id);
     }
 
     @GetMapping("/countclientbyartisan2/{id}")
-    List<Clients> artisanclients2(@PathVariable Long id) {
+    List<Utilisateur> artisanclients2(@PathVariable Long id) {
         return pannierReposetory.clientpourartisan(id);
     }
     @GetMapping("/countclientbyartisan3/{id}")

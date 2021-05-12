@@ -23,6 +23,20 @@ private String codepostale;
     private String password;
     private String tel;
     private String dateinscription;
+
+    @OneToMany(mappedBy="IdClient")
+    private Collection<Commande> ClientCommandes;
+
+
+
+    @JsonIgnore
+    public Collection<Commande> getClientCommandes() {
+        return ClientCommandes;
+    }
+
+    public void setClientCommandes(Collection<Commande> clientCommandes) {
+        ClientCommandes = clientCommandes;
+    }
     @OneToOne
     @JoinColumn(name = "emplacementid")
     private Emplacement emplacementid;

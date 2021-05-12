@@ -86,11 +86,11 @@ private String code_commande;
     public void setMontant(double montant) {
         this.montant = montant;
     }
-    public Clients getIdClient() {
+    public Utilisateur getIdClient() {
         return IdClient;
     }
 
-    public void setIdClient(Clients idClient) {
+    public void setIdClient(Utilisateur idClient) {
         IdClient = idClient;
     }
 
@@ -104,7 +104,7 @@ private String code_commande;
 
 @ManyToOne
 @JoinColumn(name ="IdCilent")
-private Clients IdClient;
+private Utilisateur IdClient;
 
 
 

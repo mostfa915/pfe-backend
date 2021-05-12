@@ -1,6 +1,7 @@
 package com.pfe.demo.controller;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pfe.demo.Services.CompteServices;
@@ -71,9 +72,14 @@ private EmplacementReposetory emplacementReposetory;
        return (Artisan) compteServices.saveUser(artisan2);
    }
     @PostMapping("/save")
-    public Artisan ajouter(/*@RequestParam("file")MultipartFile file,*/ @RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("artisan1") String artisan) throws IOException,JsonParseException,JsonMappingException
+    public Artisan ajouter(/*@RequestParam("file")MultipartFile file,*/ @RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("artisan1") String artisan,@RequestParam("Biblieographie")String bibileographie,@RequestParam("Compétances")String Compétances,@RequestParam("Education")String Education) throws IOException,JsonParseException,JsonMappingException
     {
-        Artisan a = new ObjectMapper().readValue(artisan, Artisan.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+     /*   objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);*/
+
+        Artisan a = objectMapper.readValue(artisan, Artisan.class);
+
 System.out.println(a.getDateinscription());
         System.out.println(rootLocation.toString());
         boolean isExist = new File(rootLocation.toString()).exists();
@@ -106,6 +112,10 @@ System.out.println(longitude);
         artisan2.setEmail(a.getEmail());
         artisan2.setVille(a.getVille());
 artisan2.setDateinscription(a.getDateinscription());
+artisan2.setTel(a.getTel());
+artisan2.setEducation(Education);
+artisan2.setBiblieographie(bibileographie);
+artisan2.setCompetances(Compétances);
         Roles role =rolesReposetory.findByRoleNom("ARTISAN");
         artisan2.getRoles().add(role);
 

@@ -1,9 +1,6 @@
 package com.pfe.demo.controller;
 
-import com.pfe.demo.entiter.Clients;
-import com.pfe.demo.entiter.Commande;
-import com.pfe.demo.entiter.Pannier;
-import com.pfe.demo.entiter.Produit;
+import com.pfe.demo.entiter.*;
 import com.pfe.demo.reposetory.ClientReposetory;
 import com.pfe.demo.reposetory.CommandeReposetory;
 import com.pfe.demo.reposetory.PannierReposetory;
@@ -65,8 +62,8 @@ private ProduitReposetory produitReposetory;
     public Commande Ajouter(@RequestBody Commande commande) {
         System.out.println(commande.getNom());
 
-        Clients clients=new Clients();
-                clients=clientReposetory.findbyname(commande.getNom());
+        /*Clients clients=new Clients();*/
+               Utilisateur clients=clientReposetory.findbyname(commande.getNom());
     System.out.println(clients.getId());
 
         commande.setIdClient(clients);
