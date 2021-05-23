@@ -136,6 +136,7 @@ Utilisateur u =utilisateurReposetory.findByUsername(springUser.getUsername());
             Utilisateur utilisateur=utilisateurReposetory.findbyemail(email);
       System.out.println(utilisateur);
         String hashPassword =bCryptPasswordEncoder.encode(password);
+     /* bCryptPasswordEncoder.upgradeEncoding()*/
         utilisateur.setPassword(hashPassword);
 
 

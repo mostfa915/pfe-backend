@@ -111,11 +111,11 @@ System.out.println(longitude);
         artisan2.setPrenom(a.getPrenom());
         artisan2.setEmail(a.getEmail());
         artisan2.setVille(a.getVille());
-artisan2.setDateinscription(a.getDateinscription());
-artisan2.setTel(a.getTel());
-artisan2.setEducation(Education);
-artisan2.setBiblieographie(bibileographie);
-artisan2.setCompetances(Compétances);
+        artisan2.setDateinscription(a.getDateinscription());
+        artisan2.setTel(a.getTel());
+        artisan2.setEducation(Education);
+        artisan2.setBiblieographie(bibileographie);
+        artisan2.setCompetances(Compétances);
         Roles role =rolesReposetory.findByRoleNom("ARTISAN");
         artisan2.getRoles().add(role);
 
@@ -147,6 +147,35 @@ System.out.println(id);
 
         a.setPhotodeprofil(newfilename);
         return artisanReposetory.saveAndFlush(a);
+    }
+    @PutMapping("/update2")
+    public Artisan update2(@RequestBody Artisan artisan )  throws IOException,JsonParseException,JsonMappingException{
+        ObjectMapper objectMapper = new ObjectMapper();
+
+           objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+System.out.println(artisan.getUsername());
+        System.out.println(artisan.getTel());
+        System.out.println(artisan.getDateinscription());
+System.out.println(artisan.getBiblieographie());
+System.out.println(artisan.getCompetances());
+     /*   Artisan a = objectMapper.readValue(artisan, Artisan.class);*/
+System.out.println(artisan.getId());
+        Artisan a2= new Artisan();
+        a2.setPhotodeprofil(a2.getPhotodeprofil());
+       a2.setDateinscription(a2.getDateinscription());
+       a2.setPassword(a2.getPassword());
+        a2.setId(artisan.getId());
+a2.setUsername(artisan.getUsername());
+    a2.setTel(artisan.getTel());
+    a2.setBiblieographie(artisan.getBiblieographie());
+    a2.setEducation(artisan.getEducation());
+    a2.setVille(artisan.getVille());
+    a2.setEmail(artisan.getEmail());
+    a2.setCompetances(artisan.getCompetances());
+     /*   a2.setId(id);*/
+      /*  System.out.println(a);*/
+
+        return artisanReposetory.saveAndFlush(a2);
     }
 
     @DeleteMapping("/delete/{Id}")

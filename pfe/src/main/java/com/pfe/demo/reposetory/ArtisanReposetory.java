@@ -10,7 +10,8 @@ import java.util.List;
 public interface ArtisanReposetory extends JpaRepository<Artisan,Long> {
     @Query("select p from Artisan p where p.id like :x")
     Artisan findbyId( @ Param("x") Long id);
-
+    @Query("select p from Artisan p where p.username like :x")
+    Artisan findbyname2(@Param("x") String mc);
     @Query("select p from Artisan p where p.username like : x")
     Artisan findbyname(@Param('%'+"x"+'%') String mc);
     @Query("select  p from Artisan p order by p.id desc")

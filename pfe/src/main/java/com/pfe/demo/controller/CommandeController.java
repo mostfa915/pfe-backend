@@ -69,8 +69,8 @@ private ProduitReposetory produitReposetory;
         commande.setIdClient(clients);
 
 
-
       Commande c=  commandeReposetory.save(commande);
+        c.setAdressedelivraison(commande.getAdressedelivraison());
 
 clients.getClientCommandes().add(commande);
     Collection<Pannier> lpannier = commande.getLpanniers();

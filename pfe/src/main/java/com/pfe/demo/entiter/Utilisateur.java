@@ -17,7 +17,7 @@ public class Utilisateur {
     private String photodeprofil;
 private String adresse;
 private String ville;
-private String codepostale;
+/*private String codepostale;*/
     private String prenom;
     private String email ;
     private String password;
@@ -90,13 +90,13 @@ private String codepostale;
         this.emplacementid = emplacementid;
     }
 
-    public String getAdresse() {
+   /* public String getAdresse() {
         return adresse;
     }
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
-    }
+    }*/
 
     public String getVille() {
         return ville;
@@ -106,14 +106,14 @@ private String codepostale;
         this.ville = ville;
     }
 
-    public String getCodepostale() {
+  /*  public String getCodepostale() {
         return codepostale;
-    }
+    }*/
 
-    public void setCodepostale(String codepostale) {
+  /*  public void setCodepostale(String codepostale) {
         this.codepostale = codepostale;
     }
-
+*/
     public String getTel() {
         return tel;
     }

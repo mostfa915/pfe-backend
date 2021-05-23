@@ -68,7 +68,8 @@ public class PannierController {
     }
 
     @GetMapping("/countpannierbyartisan/{id}")
-    Long artisanclients(@PathVariable Long id) {
+    List<Long> artisanclients(@PathVariable Long id)
+    {
         return pannierReposetory.countclientpourartisan(id);
     }
 
@@ -78,7 +79,7 @@ public class PannierController {
     }
     @GetMapping("/countclientbyartisan3/{id}")
     List<Pannier> clientartisan(@PathVariable Long id) {
-        return pannierReposetory.clientartisan(id);
+        return pannierReposetory.pannierartisan(id);
     }
     @GetMapping("/desc")
     List<Pannier> desc(){

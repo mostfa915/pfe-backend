@@ -10,11 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PannierReposetory  extends JpaRepository<Pannier,Long> {
-    @Query("select count(p) from Pannier p where p.Idproduit.idArtisan.id like :x")
-    Long countclientpourartisan(@Param ("x")Long id);
+    @Query("select  distinct p.IdCommande.id  from Pannier p where p.Idproduit.idArtisan.id like :x")
+    List<Long> countclientpourartisan(@Param ("x")Long id);
     @Query("select p from Pannier p where p.Idproduit.idArtisan.id like :x")
-    List<Pannier> clientartisan(@Param ("x")Long id);
-    @Query("select distinct c from Utilisateur c,Pannier p  where p.Idproduit.idArtisan.id  like :x")
+    List<Pannier> pannierartisan(@Param ("x")Long id);
+    @Query("select distinct p.IdCommande.IdClient   from Pannier p  where p.Idproduit.idArtisan.id  like :x")
     List <Utilisateur> clientpourartisan(@Param ("x")Long id);
 
     @Query("select  p from Pannier p where  p.Idproduit.idArtisan.id like :x1 and  p.datepannier like "+'%'+":x"+'%')

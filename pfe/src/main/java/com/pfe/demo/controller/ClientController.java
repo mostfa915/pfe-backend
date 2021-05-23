@@ -76,7 +76,7 @@ System.out.println(a.getUsername());
             artisan2.setVille(a.getVille());
             artisan2.setDateinscription(a.getDateinscription());
            artisan2.setTel(a.getTel());
-            Roles role =rolesReposetory.findByRoleNom("Client");
+            Roles role =rolesReposetory.findByRoleNom("CLIENT");
             artisan2.getRoles().add(role);
 
 

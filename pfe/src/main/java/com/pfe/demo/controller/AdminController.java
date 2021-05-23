@@ -42,7 +42,7 @@ private AdminReposetory adminReposetory;
 
         Roles role =rolesReposetory.findByRoleNom("ADMIN");
         admin2.getRoles().add(role);
-        Roles role2 =rolesReposetory.findByRoleNom("USER");
+        Roles role2 =rolesReposetory.findByRoleNom("CLIENT");
         admin2.getRoles().add(role2);
         admin2.setPhotodeprofil("user.png");
         return (Admin) compteServices.saveUser(admin2);
