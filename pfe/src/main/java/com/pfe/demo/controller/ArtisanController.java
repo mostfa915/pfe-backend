@@ -73,39 +73,23 @@ private EmplacementReposetory emplacementReposetory;
    }
     @PostMapping("/save")
     public Artisan ajouter(/*@RequestParam("file")MultipartFile file,*/ @RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("artisan1") String artisan,@RequestParam("Biblieographie")String bibileographie,@RequestParam("Compétances")String Compétances,@RequestParam("Education")String Education) throws IOException,JsonParseException,JsonMappingException
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-     /*   objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);*/
-
+    { ObjectMapper objectMapper = new ObjectMapper();
         Artisan a = objectMapper.readValue(artisan, Artisan.class);
-
-System.out.println(a.getDateinscription());
+        System.out.println(a.getDateinscription());
         System.out.println(rootLocation.toString());
         boolean isExist = new File(rootLocation.toString()).exists();
-System.out.println(longitude);
+        System.out.println(longitude);
         if (!isExist) {
             Files.createDirectory(rootLocation);
-            System.out.println("mk Dir");
-            }
-
-/*            String filename = file.getOriginalFilename();
-            String newfilename = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
-
-        Files.copy(file.getInputStream(), this.rootLocation.resolve(newfilename));*/
-
+            System.out.println("mk Dir"); }
         Artisan artisan1= (Artisan) compteServices.FindUserByUsername(a.getUsername());
         if(artisan1!=null)throw new RuntimeException("username exist");
-
-
         Artisan artisan2=new Artisan();
         Emplacement emp=new Emplacement();
         emp.setAltetude(latitude);
         emp.setLongetude(longitude);
         emp.setNomville(a.getVille());
         emplacementReposetory.save(emp);
-
-
         artisan2.setUsername(a.getUsername());
         artisan2.setPassword(a.getPassword());
         artisan2.setPrenom(a.getPrenom());
@@ -118,14 +102,8 @@ System.out.println(longitude);
         artisan2.setCompetances(Compétances);
         Roles role =rolesReposetory.findByRoleNom("ARTISAN");
         artisan2.getRoles().add(role);
-
-
-       artisan2.setPhotodeprofil("user.png");
-        /*System.out.println(newfilename);*/
-
+        artisan2.setPhotodeprofil("user.png");
         artisan2.setEmplacementid(emp);
-
-      //  if(a != null) {
             return(Artisan) compteServices.saveUser(artisan2);
 
     //    }
@@ -151,33 +129,27 @@ System.out.println(id);
     @PutMapping("/update2")
     public Artisan update2(@RequestBody Artisan artisan )  throws IOException,JsonParseException,JsonMappingException{
         ObjectMapper objectMapper = new ObjectMapper();
-
            objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-System.out.println(artisan.getUsername());
+        System.out.println(artisan.getUsername());
         System.out.println(artisan.getTel());
         System.out.println(artisan.getDateinscription());
-System.out.println(artisan.getBiblieographie());
-System.out.println(artisan.getCompetances());
-     /*   Artisan a = objectMapper.readValue(artisan, Artisan.class);*/
-System.out.println(artisan.getId());
+        System.out.println(artisan.getBiblieographie());
+        System.out.println(artisan.getCompetances());
+        System.out.println(artisan.getId());
         Artisan a2= new Artisan();
         a2.setPhotodeprofil(a2.getPhotodeprofil());
        a2.setDateinscription(a2.getDateinscription());
        a2.setPassword(a2.getPassword());
         a2.setId(artisan.getId());
-a2.setUsername(artisan.getUsername());
+    a2.setUsername(artisan.getUsername());
     a2.setTel(artisan.getTel());
     a2.setBiblieographie(artisan.getBiblieographie());
     a2.setEducation(artisan.getEducation());
     a2.setVille(artisan.getVille());
     a2.setEmail(artisan.getEmail());
     a2.setCompetances(artisan.getCompetances());
-     /*   a2.setId(id);*/
-      /*  System.out.println(a);*/
-
         return artisanReposetory.saveAndFlush(a2);
     }
-
     @DeleteMapping("/delete/{Id}")
     public HashMap<String, String> delete(@PathVariable Long Id) {
         HashMap hashmap = new HashMap();

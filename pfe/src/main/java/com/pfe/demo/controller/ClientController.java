@@ -37,10 +37,8 @@ public class ClientController {
     List<Clients> getAll() {
         return clientReposetory.findAll();
     }
-
-
         @PostMapping("/addclient")
-        public Clients ajouter(/*@RequestParam("file")MultipartFile file,*/ @RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("artisan1") String client) throws IOException, JsonParseException, JsonMappingException
+        public Clients ajouter(@RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("artisan1") String client) throws IOException, JsonParseException, JsonMappingException
         {
             Clients a = new ObjectMapper().readValue(client, Clients.class);
             System.out.println(a.getDateinscription());
@@ -49,26 +47,16 @@ public class ClientController {
             System.out.println(longitude);
             if (!isExist) {
                 Files.createDirectory(rootLocation);
-                System.out.println("mk Dir");
-            }
-
-/*            String filename = file.getOriginalFilename();
-            String newfilename = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
-
-        Files.copy(file.getInputStream(), this.rootLocation.resolve(newfilename));*/
-System.out.println(a.getUsername());
+                System.out.println("mk Dir"); }
+            System.out.println(a.getUsername());
             Utilisateur artisan1= (Utilisateur) compteServices.FindUserByUsername(a.getUsername());
             if(artisan1!=null)throw new RuntimeException("username exist");
-
-
             Clients artisan2=new Clients();
             Emplacement emp=new Emplacement();
             emp.setAltetude(latitude);
             emp.setLongetude(longitude);
             emp.setNomville(a.getVille());
             emplacementReposetory.save(emp);
-
-
             artisan2.setUsername(a.getUsername());
             artisan2.setPassword(a.getPassword());
             artisan2.setPrenom(a.getPrenom());
@@ -78,14 +66,8 @@ System.out.println(a.getUsername());
            artisan2.setTel(a.getTel());
             Roles role =rolesReposetory.findByRoleNom("CLIENT");
             artisan2.getRoles().add(role);
-
-
             artisan2.setPhotodeprofil("user.png");
-            /*System.out.println(newfilename);*/
-
             artisan2.setEmplacementid(emp);
-
-            //  if(a != null) {
             return(Clients) compteServices.saveUser(artisan2);
 
             //    }

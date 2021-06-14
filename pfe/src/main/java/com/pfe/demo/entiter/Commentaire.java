@@ -3,8 +3,8 @@ package com.pfe.demo.entiter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-@Entity
-public class Commentaire {
+    @Entity
+    public class Commentaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,14 +13,21 @@ public class Commentaire {
     private Utilisateur IdUtilisateur;
     @ManyToOne
     @JoinColumn(name ="idProduit")
-
     private Produit idproduit;
-private Long idProd;
+    private Long idProd;
+    private String commentaire;
+    private String nomclient;
+    private String datecommentaitre ;
 
-private String commentaire;
-private String nomclient;
+        public String getDatecommentaitre() {
+            return datecommentaitre;
+        }
 
-    public Utilisateur getIdUtilisateur() {
+        public void setDatecommentaitre(String datecommentaitre) {
+            this.datecommentaitre = datecommentaitre;
+        }
+
+        public Utilisateur getIdUtilisateur() {
         return IdUtilisateur;
     }
 
@@ -43,8 +50,6 @@ private String nomclient;
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     @JsonIgnore
     public Produit getIdproduit() {

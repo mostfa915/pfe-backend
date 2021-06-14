@@ -89,7 +89,9 @@ public class UtilisateurControlleur {
         System.out.println(jwt);
 
 Utilisateur u =utilisateurReposetory.findByUsername(springUser.getUsername());
-        return ResponseEntity.ok(new Authentificationresponse(SecuriteConstraintes.TOKEN_PREFIX+jwt,u));
+u.setConecte(1);
+utilisateurReposetory.saveAndFlush(u);
+return ResponseEntity.ok(new Authentificationresponse(SecuriteConstraintes.TOKEN_PREFIX+jwt,u));
     }
 
     @GetMapping("/getone/{id}")
@@ -141,5 +143,13 @@ Utilisateur u =utilisateurReposetory.findByUsername(springUser.getUsername());
 
 
         return utilisateurReposetory.saveAndFlush(utilisateur);  }
+    @PutMapping("/deconnection")
+    Utilisateur deconnection(@RequestBody Utilisateur utilisateur)
+    {
+        Utilisateur user=utilisateurReposetory.findByUsername(utilisateur.getUsername());
+    user.setConecte(0);
+        return utilisateurReposetory.saveAndFlush(user);
+    }
 }
+
 

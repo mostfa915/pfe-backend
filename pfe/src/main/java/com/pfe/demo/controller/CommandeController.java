@@ -61,29 +61,18 @@ private ProduitReposetory produitReposetory;
     @PostMapping("/save")
     public Commande Ajouter(@RequestBody Commande commande) {
         System.out.println(commande.getNom());
-
-        /*Clients clients=new Clients();*/
                Utilisateur clients=clientReposetory.findbyname(commande.getNom());
-    System.out.println(clients.getId());
-
+         System.out.println(clients.getId());
         commande.setIdClient(clients);
-
-
-      Commande c=  commandeReposetory.save(commande);
+        Commande c=  commandeReposetory.save(commande);
         c.setAdressedelivraison(commande.getAdressedelivraison());
-
-clients.getClientCommandes().add(commande);
-    Collection<Pannier> lpannier = commande.getLpanniers();
-
+        clients.getClientCommandes().add(commande);
+        Collection<Pannier> lpannier = commande.getLpanniers();
         for (Pannier lc : lpannier) {
-
-lc.setDatepannier(commande.getDatecommande());
-
+            lc.setDatepannier(commande.getDatecommande());
             lc.setIdCommande(commande);
-lc.setIdproduit(produitReposetory.findbyId(lc.getId()));
-
+            lc.setIdproduit(produitReposetory.findbyId(lc.getId()));
             pannierReposetory.save(lc);
-
         }
         return  c;
 

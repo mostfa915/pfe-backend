@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 @CrossOrigin("*")
@@ -34,7 +36,8 @@ public class ProduitController {
     private ArtisanReposetory artisanReposetory;
 
     @GetMapping("/all")
-    List<Produit> getAll() {
+    List<Produit> getAll()
+    {
         return produitReposetory.findAll();
     }
 
@@ -46,57 +49,33 @@ public class ProduitController {
     public ResponseEntity<Response> ajouter(@RequestParam("file")MultipartFile file, @RequestParam("product") String product) throws IOException,JsonParseException,JsonMappingException
     {
         Produit p = new ObjectMapper().readValue(product, Produit.class);
-
         System.out.println(rootLocation.toString());
         boolean isExist = new File(rootLocation.toString()).exists();
-
         if (!isExist) {
             Files.createDirectory(rootLocation);
-            //   new File(context.getRealPath("/images/")).mkdir();
             System.out.println("mk Dir");
-
-    /* final Path rootLocation = Paths.get("upload-dir");
-        Files.createDirectory(rootLocation);
-
-        String ext=file.getOriginalFilename().substring(file.getOriginalFilename().indexOf('.'), file.getOriginalFilename().length());
-        String name=file.getOriginalFilename().substring(0,file.getOriginalFilename().indexOf('.'));
-        String original=name+filename+ext;
-         retu00
-*/        }
+       }
         String filename = file.getOriginalFilename();
         String newfilename= FilenameUtils.getBaseName(filename)+"."+FilenameUtils.getExtension(filename);
-        //  File serverfile= new File (context.getRealPath("/images/"+File.separator+newfilename));
-      /* try{
-           System.out.println("image");
-           FileUtils.writeByteArrayToFile(serverfile,file.getBytes());
-
-
-    }catch (Exception e){
-           e.printStackTrace();
-
-       }*/
         Files.copy(file.getInputStream(), this.rootLocation.resolve(newfilename));
         p.setFileName(newfilename);
        p.setIdArtisan(artisanReposetory.findbyId((long) p.getIdd()));
         System.out.println(newfilename);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now));
+        p.setDateajout(dtf.format(now));
         produitReposetory.save(p);
         if(p != null) {
             return new ResponseEntity<Response>(new Response("saved"), HttpStatus.OK);
-
         }
         else{
             return new ResponseEntity<Response>(new Response(" not saved"), HttpStatus.BAD_REQUEST);
-
         }
-
     }
     @GetMapping("/imgArticle/{id}")
     public byte[]getPhoto(@PathVariable("id")Long id) throws Exception{
         Produit product=produitReposetory.findbyId(id);
-
-
-
-
         //return Files.readAllBytes(Paths.get(context.getRealPath("/images/") + product.getFileName()));
         return Files.readAllBytes(Paths.get(rootLocation +"/"+ product.getFileName()));
     }

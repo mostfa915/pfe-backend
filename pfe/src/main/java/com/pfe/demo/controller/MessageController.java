@@ -37,21 +37,23 @@ private  DiscussionController discussionController;
     List<Message> messageartisan(@PathVariable Long id) {
         return messageReposetory.messagebyartisan(id);
     }
+
+
+
     @GetMapping("/messagebyclient/{id}")
-    List<Message> messageclient(@PathVariable Long id) {
+    List<Message> messageclient(@PathVariable Long id)
+    {
         return messageReposetory.messagebclient(id);
     }
+
+
+
     @PostMapping("/addMessage")
     Message Ajouter(@RequestParam("message") String message, @RequestParam("user1") String user1, @RequestParam("user2") String user2) throws JsonProcessingException {
-
         System.out.println(message);
         System.out.println(user1);
         System.out.println(user2);
-
-
         Discussion discussion = discussionReposetory.findDiscussio(user1, user2);
-
-
         if (discussion == null) {
             Discussion discussion1 = new Discussion();
             discussion1.setUser1(user1);
@@ -65,17 +67,14 @@ private  DiscussionController discussionController;
         }
         Message message1 = new Message();
         Date aujourdhui = new Date();
-
         DateFormat shortDateFormat = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT,
                 DateFormat.SHORT);
-message1.setDate(shortDateFormat.format(aujourdhui));
+        message1.setDate(shortDateFormat.format(aujourdhui));
         message1.setMessage(message);
         message1.setIdDiscussion(discussion);
         message1.setIdUtilisateur(utilisateurReposetory.findByUsername(user1));
         message1.setIdDestinataire(utilisateurReposetory.findByUsername(user2));
-
-
         return messageReposetory.save(message1);
     }
     @PostMapping("/vu/{id}")

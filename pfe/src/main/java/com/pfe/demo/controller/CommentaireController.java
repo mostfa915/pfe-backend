@@ -11,6 +11,8 @@ import com.pfe.demo.reposetory.UtilisateurReposetory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,13 +36,16 @@ private UtilisateurReposetory utilisateurReposetory;
     @PostMapping("/add")
    Commentaire Ajouter(@RequestBody Commentaire commentaire) {
         System.out.println("x"+commentaire.getCommentaire());
-Produit p= new Produit();
+Produit p;
 p=produitReposetory.findbyId(commentaire.getIdProd());
 commentaire.setIdproduit(p);
-        Utilisateur c= new Utilisateur();
+        Utilisateur c;
          c=utilisateurReposetory.findbyname(commentaire.getNomclient());
       commentaire.setIdUtilisateur(c);
-
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now));
+commentaire.setDatecommentaitre(dtf.format(now));
         return commentaireReposetory.save(commentaire);
 
     }

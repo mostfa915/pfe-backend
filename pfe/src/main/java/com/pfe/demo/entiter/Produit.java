@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 public class Produit {
@@ -13,10 +14,19 @@ private Long id;
     private String nom;
 
    private String description;
-private double prix ;
-private static int qte= 1;
+    private double prix ;
+    private static int qte= 1;
     private String FileName;
-  private Long Idd;
+     private Long Idd;
+private String dateajout;
+
+    public String getDateajout() {
+        return dateajout;
+    }
+
+    public void setDateajout(String dateajout) {
+        this.dateajout = dateajout;
+    }
 
     public Long getIdd() {
         return Idd;

@@ -8,32 +8,37 @@ import java.util.Collection;
 
 @Entity
 @Inheritance(strategy =InheritanceType.JOINED)
-public class Utilisateur {
+    public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     @Column(unique=true)
     private String username ;
     private String photodeprofil;
-private String adresse;
-private String ville;
+    private String adresse;
+    private String ville;
 /*private String codepostale;*/
     private String prenom;
     private String email ;
     private String password;
     private String tel;
     private String dateinscription;
+    private int conecte=0;
+
+    public int getConecte() {
+        return conecte;
+    }
+
+    public void setConecte(int conecte) {
+        this.conecte = conecte;
+    }
 
     @OneToMany(mappedBy="IdClient")
     private Collection<Commande> ClientCommandes;
-
-
-
     @JsonIgnore
     public Collection<Commande> getClientCommandes() {
         return ClientCommandes;
     }
-
     public void setClientCommandes(Collection<Commande> clientCommandes) {
         ClientCommandes = clientCommandes;
     }
